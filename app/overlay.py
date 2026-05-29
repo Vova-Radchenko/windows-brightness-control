@@ -50,12 +50,13 @@ def start_overlay_loop():
 
     overlay_window.overrideredirect(True)
     overlay_window.attributes("-topmost", True)
+    overlay_window.attributes("-alpha", 0.92)
 
     screen_width = overlay_window.winfo_screenwidth()
     screen_height = overlay_window.winfo_screenheight()
 
-    window_width = 300
-    window_height = 130
+    window_width = 260
+    window_height = 115
 
     x = screen_width - window_width - 20
     y = screen_height - window_height - 60
@@ -72,14 +73,28 @@ def start_overlay_loop():
         pady = 10
     )
 
-    overlay_label.pack(expand=True)
+    overlay_label.pack(pady=(0,15))
+
+    style = ttk.Style()
+
+    style.theme_use("clam")
+
+    style.configure(
+        "Brightness.Horizontal.TProgressbar",
+        troughcolor="#2D2D2D",
+        background="#4CC2FF",
+        bordercolor="#2D2D2D",
+        lightcolor="#4CC2FF",
+        darkcolor="#4CC2FF"
+    )
 
     overlay_progressbar = ttk.Progressbar(
         overlay_window,
         orient="horizontal",
-        length=220,
+        length=200,
         mode="determinate",
-        maximum=100
+        maximum=100,
+        style="Brightness.Horizontal.TProgressbar"
     )
 
     overlay_progressbar.pack(pady=(0,15))
