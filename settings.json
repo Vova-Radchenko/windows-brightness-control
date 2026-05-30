@@ -1,3 +1,7 @@
 {
-    "brightness_step": 10
+    "brightness_step": 10,
+    "hotkeys": {
+        "increase": "ctrl+alt+up",
+        "decrease": "ctrl+alt+down"
+    }
 }

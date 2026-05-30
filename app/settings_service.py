@@ -15,3 +15,15 @@ def get_brightness_step():
     settings = load_settings()
 
     return settings["brightness_step"]
+
+
+def get_increase_hotkey():
+    settings = load_settings()
+
+    return settings["hotkeys"]["increase"]
+
+
+def get_decrease_hotkey():
+    settings = load_settings()
+
+    return settings["hotkeys"]["decrease"]
