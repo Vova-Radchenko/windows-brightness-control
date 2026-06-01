@@ -1,6 +1,11 @@
 import pystray
 from PIL import Image, ImageDraw
 from app.hotkeys import reload_hotkeys
+from app.autostart import (
+    enable_autostart,
+    disable_autostart,
+    is_autostart_enabled
+)
 
 
 def create_icon_image():
@@ -12,7 +17,7 @@ def create_icon_image():
     return image
 
 
-def on_exit(icon):
+def on_exit(icon, item):
     icon.stop()
 
 
@@ -31,6 +36,12 @@ def start_tray():
             pystray.Menu.SEPARATOR,
 
             pystray.MenuItem(
+                "Start with Windows",
+                on_toggle_autostart,
+                checked=lambda item: is_autostart_enabled()
+            ),
+
+            pystray.MenuItem(
                 "Reload Settings",
                 on_reload_settings
             ),
@@ -45,5 +56,16 @@ def start_tray():
     icon.run()
 
 
-def on_reload_settings(icon):
+def on_reload_settings(icon, item):
     reload_hotkeys()
+
+
+def on_toggle_autostart(icon, item):
+    if is_autostart_enabled():
+        disable_autostart()
+        print("Autostart disabled")
+    else:
+        enable_autostart()
+        print("Autostart enabled")
+
+    icon.update_menu()
