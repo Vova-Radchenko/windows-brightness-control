@@ -1,4 +1,5 @@
 from app.background import start_background
+from app.tray import start_tray
 
 
 def main():

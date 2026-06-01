@@ -1,8 +1,8 @@
-import keyboard
 import threading
 
 from app.hotkeys import register_hotkeys
 from app.overlay import start_overlay_loop
+from app.tray import start_tray
 
 
 def start_background():
@@ -18,8 +18,4 @@ def start_background():
 
     register_hotkeys()
 
-    try:
-        keyboard.wait()
-
-    except KeyboardInterrupt:
-        print("Brightness Control stoped")
+    start_tray()
