@@ -11,15 +11,22 @@ from app.settings_service import (
 )
 
 
+increase_hotkey = None
+decrease_hotkey = None
+
+
 def register_hotkeys():
-    keyboard.add_hotkey(
+    global increase_hotkey
+    global decrease_hotkey
+
+    increase_hotkey = keyboard.add_hotkey(
         get_increase_hotkey(),
         lambda: show_overlay(
             increase_brightness(get_brightness_step())
         )
     )
 
-    keyboard.add_hotkey(
+    decrease_hotkey = keyboard.add_hotkey(
         get_decrease_hotkey(),
         lambda: show_overlay(
             decrease_brightness(get_brightness_step())
@@ -27,3 +34,23 @@ def register_hotkeys():
     )
 
     print("Hotkeys registered")
+
+
+def unregister_hotkeys():
+    global increase_hotkey
+    global decrease_hotkey
+
+    if increase_hotkey is not None:
+        keyboard.remove_hotkey(increase_hotkey)
+        increase_hotkey = None
+
+    if decrease_hotkey is not None:
+        keyboard.remove_hotkey(decrease_hotkey)
+        decrease_hotkey = None
+
+
+def reload_hotkeys():
+    unregister_hotkeys()
+    register_hotkeys()
+
+    print("Hotkeys reloaded")

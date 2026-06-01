@@ -1,5 +1,6 @@
 import pystray
 from PIL import Image, ImageDraw
+from app.hotkeys import reload_hotkeys
 
 
 def create_icon_image():
@@ -30,6 +31,11 @@ def start_tray():
             pystray.Menu.SEPARATOR,
 
             pystray.MenuItem(
+                "Reload Settings",
+                on_reload_settings
+            ),
+
+            pystray.MenuItem(
                 "Exit",
                 on_exit
             )
@@ -37,3 +43,7 @@ def start_tray():
     )
 
     icon.run()
+
+
+def on_reload_settings(icon):
+    reload_hotkeys()
