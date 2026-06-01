@@ -1,5 +1,7 @@
 import pystray
-from PIL import Image, ImageDraw
+import sys
+from PIL import Image
+from pathlib import Path
 from app.hotkeys import reload_hotkeys
 from app.autostart import (
     enable_autostart,
@@ -9,12 +11,9 @@ from app.autostart import (
 
 
 def create_icon_image():
-    image = Image.new("RGB", (64, 64), "black")
-    draw = ImageDraw.Draw(image)
+    icon_path = get_resourse_path("assets/brightness.ico")
 
-    draw.ellipse((16, 16, 48, 48), fill="white")
-
-    return image
+    return Image.open(icon_path)
 
 
 def on_exit(icon, item):
@@ -69,3 +68,12 @@ def on_toggle_autostart(icon, item):
         print("Autostart enabled")
 
     icon.update_menu()
+
+
+def get_resourse_path(relative_path):
+    if getattr(sys, "frozen", False):
+        base_path = Path(sys._MEIPASS)
+    else:
+        base_path = Path.cwd()
+
+    return base_path / relative_path
