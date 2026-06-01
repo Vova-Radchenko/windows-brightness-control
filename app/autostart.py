@@ -1,9 +1,19 @@
 import winreg
 import sys
+from pathlib import Path
 
 
 RUN_KEY = r"Software\Microsoft\Windows\CurrentVersion\Run"
 APP_NAME = "BrightnessControl"
+
+
+def get_app_path():
+    if getattr(sys, "frozen", False):
+        return sys.executable
+    
+    main_file = Path(__file__).resolve().parent / "main.py"
+
+    return f"{sys.executable} {main_file}"
 
 
 def is_autostart_enabled():
@@ -22,7 +32,7 @@ def is_autostart_enabled():
     
 
 def enable_autostart():
-    app_path = sys.executable
+    app_path = get_app_path()
 
     with winreg.OpenKey(
         winreg.HKEY_CURRENT_USER,
