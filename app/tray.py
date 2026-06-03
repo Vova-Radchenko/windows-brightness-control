@@ -1,5 +1,6 @@
 import pystray
 import sys
+import threading
 from PIL import Image
 from pathlib import Path
 from app.hotkeys import reload_hotkeys
@@ -41,6 +42,11 @@ def start_tray():
             ),
 
             pystray.MenuItem(
+                "Settings",
+                on_open_settings
+            ),
+
+            pystray.MenuItem(
                 "Reload Settings",
                 on_reload_settings
             ),
@@ -77,3 +83,14 @@ def get_resourse_path(relative_path):
         base_path = Path.cwd()
 
     return base_path / relative_path
+
+
+def on_open_settings(icon, item):
+    from app.settings_window import open_settings_window
+
+    settings_thread = threading.Thread(
+        target=open_settings_window,
+        daemon=True
+    )
+
+    settings_thread.start()

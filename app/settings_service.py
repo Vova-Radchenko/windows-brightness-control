@@ -59,3 +59,8 @@ def get_decrease_hotkey():
         "decrease",
         DEFAULT_SETTINGS["hotkeys"]["decrease"]
     )
+
+
+def save_settings(settings):
+    with open(SETTINGS_FILE, "w") as file:
+        json.dump(settings, file, indent=4)
