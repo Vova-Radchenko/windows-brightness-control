@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import ttk
+from tkinter import ttk, messagebox
 
 from app.hotkeys import reload_hotkeys
 from app.settings_service import (
@@ -18,8 +18,24 @@ def save_button_clicked(
         increase_entry,
         decrease_entry
 ):
+    try:
+        brightness_step = int(step_entry.get())
+    except ValueError:
+        messagebox.showerror(
+            "Invalid value",
+            "Brightness step must be a number."
+        )
+        return
+    
+    if brightness_step <= 0 or brightness_step > 100:
+        messagebox.showerror(
+            "Invalid value",
+            "Brightness step must be between 1 and 100."
+        )
+        return
+
     settings = {
-        "brightness_step": int(step_entry.get()),
+        "brightness_step": brightness_step,
         "hotkeys": {
             "increase": increase_entry.get(),
             "decrease": decrease_entry.get()
@@ -29,6 +45,11 @@ def save_button_clicked(
     save_settings(settings)
     
     reload_hotkeys()
+
+    messagebox.showinfo(
+        "Settings saved",
+        "Settings were successfully updated."
+    )
 
     print("Settings saved")
 
