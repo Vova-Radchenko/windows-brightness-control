@@ -24,6 +24,29 @@ Built with Python as a desktop pet project focused on:
 * Installer support using Inno Setup
 * Custom tray and executable icon
 
+## Default Hotkeys
+
+| Action              | Hotkey            |
+| ------------------- | ----------------- |
+| Increase brightness | Ctrl + Alt + Up   |
+| Decrease brightness | Ctrl + Alt + Down |
+
+> Hotkeys can be customized in the settings window.
+
+## Screenshots
+
+### Overlay
+
+![Overlay](assets/screenshots/overlay.png)
+
+### Settings Window
+
+![Settings](assets/screenshots/settings.png)
+
+### System Tray
+
+![Tray](assets/screenshots/tray.png)
+
 ## Technologies Used
 
 * Python
@@ -72,9 +95,15 @@ python -m app.main
 pyinstaller --onefile --windowed --name BrightnessControl --icon assets/brightness.ico --add-data "assets/brightness.ico;assets" app/main.py
 ```
 
-## Current Status
+## Project Status
 
-The project is actively developed and continuously improved.
+The application is stable and fully usable in its current state.
+
+Ongoing improvements focus on:
+- UI/UX polishing
+- additional brightness control features
+- multi-monitor support
+- release and distribution improvements
 
 Planned improvements:
 - Add screenshots and usage examples to README
