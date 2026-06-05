@@ -28,7 +28,7 @@ ArchitecturesInstallIn64BitMode=x64compatible
 DisableProgramGroupPage=yes
 ; Remove the following line to run in administrative install mode (install for all users).
 PrivilegesRequired=lowest
-OutputBaseFilename=BrightnessControlSetup
+OutputBaseFilename=BrightnessControl_Setup_v{#MyAppVersion}
 SetupIconFile=D:\Vova\Projects\Python_Projects\Brightness_control\assets\brightness.ico
 SolidCompression=yes
 WizardStyle=modern dynamic

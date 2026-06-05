@@ -24,4 +24,5 @@ dist/
 # Windows
 Thumbs.db
 
+# Inno Setup
 Output/

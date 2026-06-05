@@ -95,6 +95,10 @@ python -m app.main
 pyinstaller --onefile --windowed --name BrightnessControl --icon assets/brightness.ico --add-data "assets/brightness.ico;assets" app/main.py
 ```
 
+## Version
+
+Current stable version: `1.0.0`
+
 ## Project Status
 
 The application is stable and fully usable in its current state.
