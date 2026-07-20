@@ -13,7 +13,7 @@ def get_app_path():
     
     main_file = Path(__file__).resolve().parent / "main.py"
 
-    return f"{sys.executable} {main_file}"
+    return f'"{sys.executable}" "{main_file}"'
 
 
 def is_autostart_enabled():
