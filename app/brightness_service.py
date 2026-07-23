@@ -19,16 +19,38 @@ def get_brightness():
     return sbc.get_brightness()[0] #We currently only support one monitor.
 
 
-def increase_brightness(step):
+def calculate_rounded_brightness(current_brightness, step, increase):
+    if increase:
+        return(current_brightness // step + 1) * step
+    
+    return ((current_brightness - 1) // step) * step
+
+
+def increase_brightness(step, round_to_step=False):
     current_brightness = get_brightness()
-    new_brightness = current_brightness + step
+
+    if round_to_step:
+        new_brightness = calculate_rounded_brightness(
+            current_brightness,
+            step,
+            True
+        )
+    else:
+        new_brightness = current_brightness + step
 
     return set_brightness(new_brightness)
 
 
-
-def decrease_brightness(step):
+def decrease_brightness(step, round_to_step=False):
     current_brightness = get_brightness()
-    new_brightness = current_brightness - step
+
+    if round_to_step:
+        new_brightness = calculate_rounded_brightness(
+            current_brightness,
+            step,
+            False
+        )
+    else:
+        new_brightness = current_brightness - step
 
     return set_brightness(new_brightness)

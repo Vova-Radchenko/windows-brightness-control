@@ -7,7 +7,8 @@ from app.brightness_service import (
 from app.settings_service import (
     get_brightness_step,
     get_increase_hotkey,
-    get_decrease_hotkey
+    get_decrease_hotkey,
+    get_round_brightness_to_step
 )
 
 
@@ -22,14 +23,20 @@ def register_hotkeys():
     increase_hotkey = keyboard.add_hotkey(
         get_increase_hotkey(),
         lambda: show_overlay(
-            increase_brightness(get_brightness_step())
+            increase_brightness(
+                get_brightness_step(),
+                get_round_brightness_to_step()
+            )
         )
     )
 
     decrease_hotkey = keyboard.add_hotkey(
         get_decrease_hotkey(),
         lambda: show_overlay(
-            decrease_brightness(get_brightness_step())
+            decrease_brightness(
+                get_brightness_step(),
+                get_round_brightness_to_step()
+            )
         )
     )
 

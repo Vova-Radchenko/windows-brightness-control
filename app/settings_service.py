@@ -14,14 +14,13 @@ else:
 
 SETTINGS_FILE = SETTINGS_DIRECTORY / "settings.json"
 
-# SETTINGS_FILE = "settings.json"
-
 DEFAULT_SETTINGS = {
     "brightness_step": 10,
     "hotkeys": {
         "increase": "ctrl+alt+up",
         "decrease": "ctrl+alt+down"
-    }
+    },
+    "round_brightness_to_step": False
 }
 
 
@@ -36,7 +35,23 @@ def load_settings():
     except (json.JSONDecodeError, OSError):
         return deepcopy(DEFAULT_SETTINGS)
 
-    return settings
+    merged_settings = merge_default_settings(settings)
+
+    if merged_settings != settings:
+        save_settings(merged_settings)
+
+    return merged_settings
+
+
+def merge_default_settings(settings):
+    merged = deepcopy(DEFAULT_SETTINGS)
+
+    merged.update(settings)
+
+    if "hotkeys" in settings:
+        merged["hotkeys"].update(settings["hotkeys"])
+
+    return merged
 
 
 def get_brightness_step():
@@ -46,6 +61,11 @@ def get_brightness_step():
         "brightness_step",
         DEFAULT_SETTINGS["brightness_step"]
     )
+
+
+def get_round_brightness_to_step():
+    settings = load_settings()
+    return settings["round_brightness_to_step"]
 
 
 def get_increase_hotkey():
@@ -77,6 +97,5 @@ def get_decrease_hotkey():
 def save_settings(settings):
     SETTINGS_DIRECTORY.mkdir(parents=True, exist_ok=True)
 
-    # with open(SETTINGS_FILE, "w") as file:
     with SETTINGS_FILE.open("w", encoding="utf-8") as file:
         json.dump(settings, file, indent=4)

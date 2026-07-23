@@ -6,6 +6,7 @@ from app.settings_service import (
     get_brightness_step,
     get_increase_hotkey,
     get_decrease_hotkey,
+    get_round_brightness_to_step,
     save_settings
 )
 
@@ -16,7 +17,8 @@ settings_window = None
 def save_button_clicked(
         step_entry,
         increase_entry,
-        decrease_entry
+        decrease_entry,
+        round_to_step_var
 ):
     try:
         brightness_step = int(step_entry.get())
@@ -39,7 +41,8 @@ def save_button_clicked(
         "hotkeys": {
             "increase": increase_entry.get(),
             "decrease": decrease_entry.get()
-        }
+        },
+        "round_brightness_to_step": round_to_step_var.get()
     }
 
     save_settings(settings)
@@ -64,7 +67,7 @@ def open_settings_window():
 
     settings_window = tk.Tk()
     settings_window.title("Brightness Control Settings")
-    settings_window.geometry("420x400")
+    settings_window.geometry("420x430")
     settings_window.resizable(False, False)
     settings_window.configure(bg="#262626")
 
@@ -72,21 +75,6 @@ def open_settings_window():
         "WM_DELETE_WINDOW",
         lambda: close_settings_window()
     )
-
-    # main_frame = tk.Frame(
-    #     settings_window,
-    #     bg="#151515",
-    #     padx=30,
-    #     pady=30
-    # )
-    
-    # main_frame.pack(
-    #     fill="both",
-    #     expand=True,
-    #     padx=40,
-    #     pady=30
-    # )
-    # main_frame.grid_columnconfigure(0, weight=1)
 
     content_frame = tk.Frame(
         settings_window,
@@ -231,13 +219,37 @@ def open_settings_window():
         pady=(0, 14)
     )
 
+    round_to_step_var = tk.BooleanVar(
+        master=settings_window,
+        value=get_round_brightness_to_step()
+    )
+
+    tk.Checkbutton(
+        content_frame,
+        text="Round brightness to step values",
+        variable=round_to_step_var,
+        bg="#262626",
+        fg="white",
+        activebackground="#262626",
+        activeforeground="white",
+        selectcolor="#2B2B2B",
+        font=("Segoe UI", 10),
+        cursor="hand2"
+    ).grid(
+        row=8,
+        column=0,
+        sticky="w",
+        pady=(2, 0)
+    )
+
     tk.Button(
         content_frame,
         text="Save",
         command=lambda: save_button_clicked(
             step_entry,
             increase_entry,
-            decrease_entry
+            decrease_entry,
+            round_to_step_var
         ),
         bg="#3B82F6",
         fg="white",
@@ -250,7 +262,7 @@ def open_settings_window():
         cursor="hand2",
         borderwidth=0
     ).grid(
-        row=8,
+        row=9,
         column=0,
         sticky="e",
         pady=(18, 0)
